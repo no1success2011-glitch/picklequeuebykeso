@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <title>Pickleball Court Control</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-theme="court">
+<main class="app-shell">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">COURT CONTROL · 6 COURTS</p>
+      <h1>Pickleball <span>Scoreboard</span></h1>
+      <p class="subtitle">Six independent courts, automatic player rotation, and live player records.</p>
+    </div>
+    <div class="theme-control">
+      <label for="themeSelect">Background gradient</label>
+      <select id="themeSelect">
+        <option value="court">Court Green</option><option value="sunset">Sunset</option>
+        <option value="ocean">Ocean Blue</option><option value="berry">Berry Pop</option>
+        <option value="neon">Neon Night</option>
+      </select>
+    </div>
+  </header>
+
+  <section class="toolbar panel">
+    <div class="setting">
+      <label for="maxWins">Points to win</label>
+      <input id="maxWins" type="number" min="1" max="99" value="11">
+    </div>
+    <div class="toolbar-note"><strong>Auto Queue</strong><span>Waiting players fill open team spots, two players per team.</span></div>
+    <button class="primary-button" id="addCourt">＋ Add court</button>
+  </section>
+
+  <section class="courts-heading"><div><p class="eyebrow">LIVE MATCHES</p><h2>Your courts</h2></div><span class="helper">Add courts as needed · each court is independent</span></section>
+  <section id="courtsGrid" class="courts-grid" aria-live="polite"></section>
+
+  <section class="lower-grid">
+    <article class="panel records-panel">
+      <div class="panel-heading"><div><p class="eyebrow">PLAYER STATS</p><h2>Win / loss records</h2></div><span class="panel-symbol">↗</span></div>
+      <p class="helper">Records are tracked for each player across games.</p>
+      <div class="table-wrap"><table><thead><tr><th>Player / Team logo</th><th>Wins</th><th>Losses</th><th>Win rate</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+      <button class="text-button" id="clearRecords">Clear all records</button>
+    </article>
+  </section>
+  <footer class="donation panel">
+    <div><p class="eyebrow">SUPPORT THE COURT</p><strong>GCash Donation</strong><span class="helper">Tap to view donation details</span></div>
+    <button class="secondary-button" id="showGcash">Show GCash number</button>
+  </footer>
+  <dialog id="gcashDialog" class="gcash-dialog">
+    <div class="gcash-content"><p class="eyebrow">GCASH DONATION</p><h2>Donation number</h2><p class="gcash-number" id="gcashNumber">09981525189</p><div class="dialog-actions"><button class="secondary-button" id="closeGcash">Close</button><button class="primary-button" id="copyGcash">Copy number</button></div></div>
+  </dialog>
+  <footer class="page-footer">Pickleball Court Control <span>•</span> Data is saved on this device</footer>
+</main>
+<dialog id="playerDialog">
+  <form method="dialog" id="playerForm">
+    <p class="eyebrow">PLAYER DETAILS</p><h2>Edit player</h2>
+    <label for="editName">Player name</label><input id="editName" maxlength="32" required>
+    <label>Player photo</label><input id="playerPhoto" type="file" accept="image/*" capture="user">
+    <div class="dialog-actions"><button type="button" class="danger-button" id="deletePlayer">Remove</button><span></span><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="savePlayer" value="save">Save</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>
