@@ -19,3 +19,12 @@ button,input,select{font:inherit}button{cursor:pointer}.app-shell{width:min(1440
 .court-head-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.danger-button.small{padding:5px 7px;font-size:.62rem}.court-queue{margin-top:13px;border-top:1px solid #ffffff16;padding-top:11px}.court-queue-head{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;margin-bottom:7px}.court-add-form{display:flex;gap:6px;margin-top:8px}.court-add-form input{flex:1;min-width:0;padding:8px;font-size:.72rem}.court-add-form button{padding:8px 10px;font-size:.7rem}.court-waiting{max-height:120px;overflow:auto}.court-card{position:relative;overflow:hidden}.court-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--court-accent)}.court-color-1{--court-accent:#22d3ee}.court-color-2{--court-accent:#f59e0b}.court-color-3{--court-accent:#a78bfa}.court-color-4{--court-accent:#fb7185}.court-color-5{--court-accent:#4ade80}.court-color-6{--court-accent:#60a5fa}.court-color-7{--court-accent:#f472b6}.court-color-8{--court-accent:#facc15}.court-color-9{--court-accent:#2dd4bf}.court-color-10{--court-accent:#c084fc}.serve-button.serve-1{background:#22d3ee30;border-color:#22d3ee80;color:#a5f3fc}.serve-button.serve-2{background:#fb718530;border-color:#fb718580;color:#fecdd3}.gcash-dialog{width:min(360px,calc(100% - 28px))}.gcash-content{text-align:center}.gcash-number{font-size:1.5rem;font-weight:900;letter-spacing:.08em;margin:18px 0}.gcash-content .dialog-actions{justify-content:center}.gcash-content .dialog-actions button{flex:1}
 
 .record-player{display:flex;align-items:center;gap:9px;min-width:150px}.record-team-logo{width:32px;height:32px;object-fit:cover;border-radius:8px;background:#ffffff16;flex:none}.record-logo-empty{display:grid;place-items:center;color:#94a3b8;font-size:.7rem}.records-panel table th:first-child{min-width:160px}
+
+/* Player switching and per-court photo backgrounds */
+.upload-court-bg{font-size:.62rem;color:var(--lime);font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid #bef26455;border-radius:7px;padding:5px 7px;background:#bef26412}
+.player-chip .icon-button{flex:none}
+#swapDialog{width:min(460px,calc(100% - 28px))}
+#swapDialog form{display:grid;gap:11px}
+#swapDialog select{width:100%;min-width:0}
+.court-card[style*="background-image"]{background-blend-mode:normal}
+@media(max-width:560px){.court-head-actions{justify-content:flex-end}.upload-court-bg{font-size:.58rem}}

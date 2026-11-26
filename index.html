@@ -63,5 +63,14 @@
     <div class="dialog-actions"><button type="button" class="danger-button" id="deletePlayer">Remove</button><span></span><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="savePlayer" value="save">Save</button></div>
   </form>
 </dialog>
+<dialog id="swapDialog">
+  <form method="dialog" id="swapForm">
+    <p class="eyebrow">PLAYER ROTATION</p><h2>Switch player position</h2>
+    <p class="helper" id="swapDescription">Choose another player on this court. Their team or waiting-list positions will be exchanged.</p>
+    <label for="swapTarget">Switch with</label>
+    <select id="swapTarget" required></select>
+    <div class="dialog-actions"><span></span><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="confirmSwap" value="save">Switch players</button></div>
+  </form>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body></html>
