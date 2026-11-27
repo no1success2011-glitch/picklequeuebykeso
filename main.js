@@ -1,12 +1,12 @@
 (() => {
 "use strict";
 const KEY="pickleball-court-control-v3";
-const freshCourt=(n)=>({id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,name:`Court ${n}`,teams:{1:[],2:[]},queue:[],scores:{1:0,2:0},serve:1,serveTeam:1,finished:false,logos:{1:"",2:""}});
+const freshCourt=(n)=>({id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,name:`Court ${n}`,teams:{1:[],2:[]},queue:[],scores:{1:0,2:0},serve:1,serveTeam:1,finished:false,logos:{1:"",2:""},courtRecords:{}});
 const initial={courts:[],records:{},maxWins:11,theme:"court"};
 const $=s=>document.querySelector(s);
 let state=load(),editingId=null,editingCourtId=null,swapSourceId=null,toastTimer;
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(!s)return structuredClone(initial);
-return {...structuredClone(initial),...s,courts:(s.courts||[]).map((c,i)=>({...freshCourt(i+1),...c,teams:{1:c.teams?.[1]||[],2:c.teams?.[2]||[]},queue:c.queue||[],scores:{1:Number(c.scores?.[1])||0,2:Number(c.scores?.[2])||0},logos:{1:c.logos?.[1]||"",2:c.logos?.[2]||[]}}))};}catch{return structuredClone(initial)}}
+return {...structuredClone(initial),...s,courts:(s.courts||[]).map((c,i)=>({...freshCourt(i+1),...c,teams:{1:c.teams?.[1]||[],2:c.teams?.[2]||[]},queue:c.queue||[],scores:{1:Number(c.scores?.[1])||0,2:Number(c.scores?.[2])||0},logos:{1:c.logos?.[1]||"",2:c.logos?.[2]||""},courtRecords:c.courtRecords||{}}))};}catch{return structuredClone(initial)}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{toast("Storage is full. Please use smaller photos/logos.")}}
 const clean=s=>s.trim().replace(/\s+/g," ");
 const allPlayers=()=>state.courts.flatMap(c=>[...c.queue,...c.teams[1],...c.teams[2]]);
@@ -19,21 +19,27 @@ function chip(p,courtId){const d=document.createElement("div");d.className="play
 d.innerHTML=`${p.photo?`<img class="avatar" src="${p.photo}" alt="">`:`<span class="avatar avatar-empty">${escape(p.name.slice(0,1).toUpperCase())}</span>`}<span class="player-name"></span><button class="icon-button" data-swap="${p.id}" data-court="${courtId}" title="Switch player position">⇄</button><button class="icon-button" data-edit="${p.id}" data-court="${courtId}" title="Edit player">✎</button>`;
 d.querySelector(".player-name").textContent=p.name;return d}
 function teamHTML(c,t,idx){const logo=c.logos[t];return `<section class="team-box team-${t}"><div class="team-head"><div class="team-identity">${logo?`<img class="team-logo" src="${logo}" alt="">`:`<span class="team-logo logo-placeholder">T${t}</span>`}<div><span class="team-label">TEAM ${t}</span><strong>${c.teams[t].length}/2 players</strong></div></div><label class="upload-logo">＋ Logo<input type="file" accept="image/*" data-logo="${c.id}:${t}" hidden></label></div><div class="team-score">${c.scores[t]}</div><div class="score-buttons"><button data-score="${c.id}:${t}:-1">−</button><button data-score="${c.id}:${t}:1">+</button></div><div class="player-list" data-player-list="${c.id}:${t}"></div></section>`}
+function courtStatsHTML(c){
+ const rows=Object.values(c.courtRecords||{}).sort((a,b)=>a.name.localeCompare(b.name));
+ if(!rows.length)return '<tr><td colspan="4" class="empty-state">No completed games on this court yet.</td></tr>';
+ return rows.map(r=>{const n=r.wins+r.losses;return `<tr><td>${escape(r.name)}</td><td class="record-win">${r.wins}</td><td class="record-loss">${r.losses}</td><td>${n?Math.round(r.wins/n*100)+"%":"—"}</td></tr>`}).join("");
+}
 function renderCourts(){const grid=$("#courtsGrid");grid.innerHTML="";
 state.courts.forEach((c,i)=>{const card=document.createElement("article");card.className=`court-card panel ${palette[i%palette.length]}`;card.dataset.court=c.id;if(c.background){card.style.backgroundImage=`linear-gradient(rgba(5,12,28,.78),rgba(5,12,28,.88)),url("${c.background}")`;card.style.backgroundSize="cover";card.style.backgroundPosition="center";}
 card.innerHTML=`<div class="court-title"><div><p class="eyebrow">COURT ${String(i+1).padStart(2,"0")}</p><h3>${escape(c.name)}</h3></div><div class="court-head-actions"><span class="court-state">${c.finished?"FINISHED":"READY"}</span><label class="upload-court-bg">＋ Court photo<input type="file" accept="image/*" data-court-bg="${c.id}" hidden></label><button class="danger-button small" data-clear-court="${c.id}">Clear players</button><button class="danger-button small" data-remove-court="${c.id}" title="Remove court">×</button></div></div>
 <div class="teams">${teamHTML(c,1,i)}<div class="versus">VS</div>${teamHTML(c,2,i)}</div>
 <div class="match-actions"><div class="serve-control"><span>Serve:</span><button data-serve="${c.id}" class="serve-button serve-${c.serveTeam}">Serve ${c.serve}</button></div><div class="win-actions"><button class="win-button win-one" data-win="${c.id}:1" ${c.finished?"disabled":""}>TEAM 1 WIN</button><button class="win-button win-two" data-win="${c.id}:2" ${c.finished?"disabled":""}>TEAM 2 WIN</button></div><button class="reset-button" data-reset="${c.id}">↻ Reset</button></div>
-<div class="court-queue"><div class="court-queue-head"><strong>Waiting list</strong><span class="count">${c.queue.length}</span></div><div class="player-list court-waiting" data-queue="${c.id}"></div><form class="court-add-form" data-add-form="${c.id}"><input name="playerName" placeholder="Add player to this court" maxlength="32" required><button class="primary-button">Add</button></form></div>`;
+<div class="court-queue"><div class="court-queue-head"><strong>Waiting list</strong><span class="count">${c.queue.length}</span></div><div class="player-list court-waiting" data-queue="${c.id}"></div><form class="court-add-form" data-add-form="${c.id}"><input name="playerName" placeholder="Add player to this court" maxlength="32" required><button class="primary-button">Add</button></form></div>
+<section class="court-stats"><div class="court-stats-heading"><div><p class="eyebrow">PLAYER STATS</p><strong>${escape(c.name)} · Win / loss records</strong></div></div><div class="table-wrap"><table><thead><tr><th>Player</th><th>Wins</th><th>Losses</th><th>Win rate</th></tr></thead><tbody>${courtStatsHTML(c)}</tbody></table></div></section>`;
 grid.append(card);
 for(const t of [1,2]){const list=card.querySelector(`[data-player-list="${c.id}:${t}"]`);c.teams[t].forEach(p=>list.append(chip(p,c.id)));if(!c.teams[t].length){const e=document.createElement("div");e.className="empty-state";e.textContent="Waiting for players";list.append(e)}}
 const q=card.querySelector(`[data-queue="${c.id}"]`);c.queue.forEach(p=>q.append(chip(p,c.id)));if(!c.queue.length)q.innerHTML='<div class="empty-state">No one waiting</div>';
 })}
 function renderRecords(){const b=$("#recordsBody");b.innerHTML="";const rows=Object.entries(state.records).sort((a,b)=>a[1].name.localeCompare(b[1].name));if(!rows.length){b.innerHTML='<tr><td colspan="5" class="empty-state">No records yet.</td></tr>';return}rows.forEach(([id,r])=>{const n=r.wins+r.losses,tr=document.createElement("tr");tr.innerHTML=`<td class="record-player">${r.teamLogo?`<img class="record-team-logo" src="${r.teamLogo}" alt="Team logo">`:`<span class="record-team-logo record-logo-empty">—</span>`}<strong>${escape(r.name)}</strong></td><td class="record-win">${r.wins}</td><td class="record-loss">${r.losses}</td><td>${n?Math.round(r.wins/n*100)+"%":"—"}</td>`;b.append(tr)})}
-function render(){document.body.dataset.theme=state.theme;$("#themeSelect").value=state.theme;$("#maxWins").value=state.maxWins;renderCourts();renderRecords();save()}
+function render(){document.body.dataset.theme=state.theme;$("#themeSelect").value=state.theme;$("#maxWins").value=state.maxWins;renderCourts();save()}
 function addPlayer(c,name){name=clean(name);if(!name)return;if(allPlayers().some(p=>p.name.toLowerCase()===name.toLowerCase()))return toast("That player is already listed.");const p={id:crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`,name,photo:""};record(p);c.queue.push(p);autoAssign(c);render();toast(`${name} added to ${c.name}.`)}
 function findPlayer(pid){for(const c of state.courts){for(const t of ["1","2"]){const list=c.teams[t],i=list.findIndex(p=>p.id===pid);if(i>=0)return {player:list[i],list,index:i,court:c}}const i=c.queue.findIndex(p=>p.id===pid);if(i>=0)return {player:c.queue[i],list:c.queue,index:i,court:c}}return null}
-function finish(c,w){if(c.finished)return;const l=w===1?2:1;c.teams[w].forEach(p=>{record(p,c.logos[w]);state.records[p.id].wins++});c.teams[l].forEach(p=>{record(p,c.logos[l]);state.records[p.id].losses++});const winners=c.teams[w].map(p=>p.name).join(", ");c.queue.push(...c.teams[1],...c.teams[2]);c.teams={1:[],2:[]};c.scores={1:0,2:0};c.serve=1;c.serveTeam=w;c.finished=false;autoAssign(c);render();toast(`${c.name}: Team ${w} wins (${winners}). Rotation complete.`)}
+function finish(c,w){if(c.finished)return;const l=w===1?2:1;c.courtRecords ||= {};c.teams[w].forEach(p=>{record(p,c.logos[w]);state.records[p.id].wins++;c.courtRecords[p.id] ||= {name:p.name,wins:0,losses:0};c.courtRecords[p.id].name=p.name;c.courtRecords[p.id].wins++});c.teams[l].forEach(p=>{record(p,c.logos[l]);state.records[p.id].losses++;c.courtRecords[p.id] ||= {name:p.name,wins:0,losses:0};c.courtRecords[p.id].name=p.name;c.courtRecords[p.id].losses++});const winners=c.teams[w].map(p=>p.name).join(", ");c.queue.push(...c.teams[1],...c.teams[2]);c.teams={1:[],2:[]};c.scores={1:0,2:0};c.serve=1;c.serveTeam=w;c.finished=false;autoAssign(c);render();toast(`${c.name}: Team ${w} wins (${winners}). Rotation complete.`)}
 function positionLabel(c,pid){
  for(const t of ["1","2"]){const i=c.teams[t].findIndex(p=>p.id===pid);if(i>=0)return `Team ${t} · Player ${i+1}`}
  const i=c.queue.findIndex(p=>p.id===pid);return i>=0?`Waiting list · #${i+1}`:"Player";
@@ -76,11 +82,11 @@ $("#courtsGrid").addEventListener("change",e=>{
 });
 $("#playerForm").addEventListener("submit",e=>{if(e.submitter?.id!=="savePlayer")return;e.preventDefault();const f=findPlayer(editingId),name=clean($("#editName").value);if(!f||!name)return;if(allPlayers().some(p=>p.id!==editingId&&p.name.toLowerCase()===name.toLowerCase()))return toast("Duplicate player name.");f.player.name=name;if(state.records[editingId])state.records[editingId].name=name;const file=$("#playerPhoto").files[0];const done=()=>{$("#playerDialog").close();render()};if(file)readImg(file,src=>{f.player.photo=src;done()});else done()});
 $("#deletePlayer").addEventListener("click",()=>{const f=findPlayer(editingId);if(!f)return;if(confirm(`Remove ${f.player.name} from ${f.court.name}? Record stays.`)){f.list.splice(f.index,1);autoAssign(f.court);$("#playerDialog").close();render()}});
-$("#clearRecords").addEventListener("click",()=>{if(confirm("Clear all win/loss records?")){state.records={};allPlayers().forEach(record);render()}});
+
 // The donation number exists only inside this closed dialog until the user requests it.
 $("#gcashDialog").close();
 $("#showGcash").addEventListener("click",()=>$("#gcashDialog").showModal());
 $("#closeGcash").addEventListener("click",()=>$("#gcashDialog").close());
-$("#copyGcash").addEventListener("click",async()=>{try{await navigator.clipboard.writeText("09981525189");toast("GCash number copied.");$("#gcashDialog").close()}catch{toast("Clipboard unavailable. Please copy 09981525189 manually.")}});
+
 render();
 })();

@@ -12,9 +12,9 @@
 <main class="app-shell">
   <header class="topbar">
     <div>
-      <p class="eyebrow">COURT CONTROL · 6 COURTS</p>
+      <p class="eyebrow">COURT CONTROL PER COURT ADDED</p>
       <h1>Pickleball <span>Scoreboard</span></h1>
-      <p class="subtitle">Six independent courts, automatic player rotation, and live player records.</p>
+      <p class="subtitle">Add courts as needed, rotate players automatically, and track stats separately for every court.</p>
     </div>
     <div class="theme-control">
       <label for="themeSelect">Background gradient</label>
@@ -38,20 +38,20 @@
   <section class="courts-heading"><div><p class="eyebrow">LIVE MATCHES</p><h2>Your courts</h2></div><span class="helper">Add courts as needed · each court is independent</span></section>
   <section id="courtsGrid" class="courts-grid" aria-live="polite"></section>
 
-  <section class="lower-grid">
-    <article class="panel records-panel">
-      <div class="panel-heading"><div><p class="eyebrow">PLAYER STATS</p><h2>Win / loss records</h2></div><span class="panel-symbol">↗</span></div>
-      <p class="helper">Records are tracked for each player across games.</p>
-      <div class="table-wrap"><table><thead><tr><th>Player / Team logo</th><th>Wins</th><th>Losses</th><th>Win rate</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
-      <button class="text-button" id="clearRecords">Clear all records</button>
-    </article>
-  </section>
   <footer class="donation panel">
-    <div><p class="eyebrow">SUPPORT THE COURT</p><strong>GCash Donation</strong><span class="helper">Tap to view donation details</span></div>
-    <button class="secondary-button" id="showGcash">Show GCash number</button>
+    <div><p class="eyebrow">SUPPORT THE COURT</p><strong>GCash Donation</strong><span class="helper">Scan the QR code or download it to donate</span></div>
+    <button class="secondary-button" id="showGcash">View GCash QR</button>
   </footer>
   <dialog id="gcashDialog" class="gcash-dialog">
-    <div class="gcash-content"><p class="eyebrow">GCASH DONATION</p><h2>Donation number</h2><p class="gcash-number" id="gcashNumber">09981525189</p><div class="dialog-actions"><button class="secondary-button" id="closeGcash">Close</button><button class="primary-button" id="copyGcash">Copy number</button></div></div>
+    <div class="gcash-content">
+      <p class="eyebrow">GCASH DONATION</p><h2>Scan to Donate</h2>
+      <img class="gcash-qr" src="gcash-qr.jpg" alt="GCash donation QR code">
+      <p class="helper">Open your payment app and scan this QR code.</p>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="closeGcash">Close</button>
+        <a class="primary-button download-qr" href="gcash-qr.jpg" download="GCash-Donation-QR.jpg">Download QR</a>
+      </div>
+    </div>
   </dialog>
   <footer class="page-footer">Pickleball Court Control <span>•</span> Data is saved on this device</footer>
 </main>

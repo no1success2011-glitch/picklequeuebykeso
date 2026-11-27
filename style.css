@@ -28,3 +28,17 @@ button,input,select{font:inherit}button{cursor:pointer}.app-shell{width:min(1440
 #swapDialog select{width:100%;min-width:0}
 .court-card[style*="background-image"]{background-blend-mode:normal}
 @media(max-width:560px){.court-head-actions{justify-content:flex-end}.upload-court-bg{font-size:.58rem}}
+
+/* Per-court player statistics and GCash QR donation */
+.court-stats{margin-top:15px;padding-top:13px;border-top:1px solid #ffffff20}
+.court-stats-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.court-stats-heading strong{font-size:.78rem}
+.court-stats table{font-size:.72rem}
+.court-stats th{padding:7px 6px}
+.court-stats td{padding:8px 6px}
+.gcash-dialog{width:min(390px,calc(100% - 28px))}
+.gcash-content{display:grid;justify-items:center;gap:10px}
+.gcash-qr{display:block;width:min(100%,310px);height:auto;object-fit:contain;background:#fff;border-radius:8px;padding:5px}
+.gcash-content .dialog-actions{width:100%;justify-content:space-between}
+.gcash-content .dialog-actions>*{flex:1;text-align:center}
+.download-qr{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:10px 13px;font-size:.76rem;font-weight:850;background:var(--lime);color:#1a2e05}
