@@ -54,10 +54,7 @@
   <section class="courts-heading"><div><p class="eyebrow">LIVE MATCHES</p><h2>Your courts</h2></div><span class="helper">Add courts as needed · each court is independent</span></section>
   <section id="courtsGrid" class="courts-grid" aria-live="polite"></section>
 
-  <footer class="donation panel">
-    <div><p class="eyebrow">SUPPORT THE COURT</p><strong>GCash Donation</strong><span class="helper">Scan the QR code or download it to donate</span></div>
-    <button class="secondary-button" id="showGcash">View GCash QR</button>
-  </footer>
+  <footer class="donation panel"><button class="primary-button donation-button" id="showGcash">♡ Support the Court · GCash Donation</button></footer>
   <dialog id="gcashDialog" class="gcash-dialog">
     <div class="gcash-content">
       <p class="eyebrow">GCASH DONATION</p><h2>Scan to Donate</h2>
@@ -79,7 +76,7 @@
   <form method="dialog" id="playerForm">
     <p class="eyebrow">PLAYER DETAILS</p><h2>Edit player</h2>
     <label for="editName">Player name</label><input id="editName" maxlength="32" required>
-    <label>Player photo</label><input id="playerPhoto" type="file" accept="image/*" capture="user">
+    <label for="playerPhoto">Player photo (optional)</label><input id="playerPhoto" type="file" accept="image/*" capture="user">
     <div class="dialog-actions"><button type="button" class="danger-button" id="deletePlayer">Remove</button><span></span><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="savePlayer" value="save">Save</button></div>
   </form>
 </dialog>
