@@ -12,8 +12,8 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <title>Pickleball Court Control</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="main.js?v=3" defer></script>
 </head>
 <body data-theme="court">
 <main class="app-shell">
@@ -55,10 +55,10 @@
   <section id="courtsGrid" class="courts-grid" aria-live="polite"></section>
 
   <footer class="donation panel"><button class="primary-button donation-button" id="showGcash">♡ Support the Court · GCash Donation</button></footer>
-  <dialog id="gcashDialog" class="gcash-dialog">
+  <dialog id="gcashDialog" class="gcash-dialog" hidden>
     <div class="gcash-content">
       <p class="eyebrow">GCASH DONATION</p><h2>Scan to Donate</h2>
-      <img class="gcash-qr" src="gcash-qr.jpg" alt="GCash donation QR code">
+      <img class="gcash-qr" data-src="gcash-qr.jpg" alt="GCash donation QR code">
       <p class="helper">Open your payment app and scan this QR code.</p>
       <div class="dialog-actions">
         <button class="secondary-button" id="closeGcash">Close</button>

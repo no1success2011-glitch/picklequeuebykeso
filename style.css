@@ -97,3 +97,20 @@ body[data-theme=lavender] .player-photo-picker,body[data-theme=mint] .player-pho
 /* Keep the GCash dialog completely hidden until the View/Support button opens it. */
 dialog.gcash-dialog:not([open]){display:none !important}
 dialog.gcash-dialog[open]{display:block}
+
+
+/* Dialog remains hidden on every screen size until the donation action opens it. */
+dialog[hidden],dialog.gcash-dialog:not([open]){display:none !important}
+dialog.gcash-dialog[open]{display:block}
+.gcash-qr{display:block;max-width:100%;height:auto}
+
+/* Keep full player names readable, with Edit above Switch in a vertical action stack. */
+.player-chip{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:7px}
+.player-name{grid-column:2;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.25}
+.player-actions{grid-column:3;grid-row:1;display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.player-actions .icon-button{font-size:.62rem;padding:4px 6px;white-space:nowrap}
+.edit-player-button{order:1}.swap-player-button{order:2}
+.team-name-edit{display:inline-block;max-width:100%;padding:0;border:0;background:transparent;text-align:left;font:inherit;font-size:.68rem;letter-spacing:.1em;font-weight:900;cursor:pointer;color:inherit;overflow-wrap:anywhere}
+.team-name-edit:hover{text-decoration:underline}
+.team-identity,.team-identity>div{min-width:0}.team-label{white-space:normal}
+@media(max-width:560px){.player-chip{grid-template-columns:26px minmax(0,1fr) auto;gap:5px;padding:6px}.player-name{font-size:.72rem}.player-actions .icon-button{font-size:.58rem;padding:4px 5px}.team-name-edit{font-size:.62rem;letter-spacing:.04em}}
