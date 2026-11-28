@@ -92,3 +92,8 @@ body[data-theme=lavender] .record-win,body[data-theme=mint] .record-win,body[dat
 body[data-theme=lavender] .page-footer,body[data-theme=mint] .page-footer,body[data-theme=peach] .page-footer,body[data-theme=sky] .page-footer,body[data-theme=cream] .page-footer{color:#475569}
 body[data-theme=lavender] .player-photo-picker,body[data-theme=mint] .player-photo-picker,body[data-theme=peach] .player-photo-picker,body[data-theme=sky] .player-photo-picker,body[data-theme=cream] .player-photo-picker{color:#365314;background:#ecfccb;border-color:#a3e635}
 @media(max-width:560px){.court-add-form{flex-wrap:wrap}.court-add-form input[name=playerName]{flex:1 1 100%}.court-add-form .player-photo-picker{flex:1}}
+
+
+/* Keep the GCash dialog completely hidden until the View/Support button opens it. */
+dialog.gcash-dialog:not([open]){display:none !important}
+dialog.gcash-dialog[open]{display:block}
