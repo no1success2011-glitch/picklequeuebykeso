@@ -83,10 +83,50 @@ $("#courtsGrid").addEventListener("change",e=>{
 $("#playerForm").addEventListener("submit",e=>{if(e.submitter?.id!=="savePlayer")return;e.preventDefault();const f=findPlayer(editingId),name=clean($("#editName").value);if(!f||!name)return;if(allPlayers().some(p=>p.id!==editingId&&p.name.toLowerCase()===name.toLowerCase()))return toast("Duplicate player name.");f.player.name=name;if(state.records[editingId])state.records[editingId].name=name;const file=$("#playerPhoto").files[0];const done=()=>{$("#playerDialog").close();render()};if(file)readImg(file,src=>{f.player.photo=src;done()});else done()});
 $("#deletePlayer").addEventListener("click",()=>{const f=findPlayer(editingId);if(!f)return;if(confirm(`Remove ${f.player.name} from ${f.court.name}? Record stays.`)){f.list.splice(f.index,1);autoAssign(f.court);$("#playerDialog").close();render()}});
 
-// The donation number exists only inside this closed dialog until the user requests it.
+// GCash donation QR dialog
 $("#gcashDialog").close();
 $("#showGcash").addEventListener("click",()=>$("#gcashDialog").showModal());
 $("#closeGcash").addEventListener("click",()=>$("#gcashDialog").close());
+
+
+// App sharing: use the device share sheet, or provide common social share links.
+const appTitle="Pickleball Court Control";
+const appText="Use Pickleball Court Control to manage courts, scores, player rotation and stats.";
+const appUrl=()=>location.href.split("#")[0];
+function prepareShareLinks(){
+ const u=encodeURIComponent(appUrl()),t=encodeURIComponent(appText);
+ $("#shareFacebook").href=`https://www.facebook.com/sharer/sharer.php?u=${u}`;
+ $("#shareX").href=`https://twitter.com/intent/tweet?url=${u}&text=${t}`;
+ $("#shareWhatsApp").href=`https://wa.me/?text=${t}%20${u}`;
+ $("#shareTelegram").href=`https://t.me/share/url?url=${u}&text=${t}`;
+ $("#shareEmail").href=`mailto:?subject=${encodeURIComponent(appTitle)}&body=${t}%0A${u}`;
+}
+$("#shareApp").addEventListener("click",async()=>{
+ prepareShareLinks();
+ if(navigator.share){
+  try{await navigator.share({title:appTitle,text:appText,url:appUrl()});return}catch(err){if(err?.name==="AbortError")return}
+ }
+ $("#shareDialog").showModal();
+});
+$("#closeShare").addEventListener("click",()=>$("#shareDialog").close());
+$("#copyAppLink").addEventListener("click",async()=>{
+ try{await navigator.clipboard.writeText(appUrl());toast("App link copied.");$("#shareDialog").close()}
+ catch{toast("Copy unavailable. Please copy the address from your browser.")}
+});
+
+let installPrompt=null;
+const installButton=$("#installApp");
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;installButton.hidden=false});
+window.addEventListener("appinstalled",()=>{installPrompt=null;installButton.hidden=true;toast("Court Control installed.")});
+installButton.addEventListener("click",async()=>{
+ if(installPrompt){installPrompt.prompt();try{await installPrompt.userChoice}catch{}installPrompt=null}
+ else $("#installDialog").showModal();
+});
+$("#closeInstall").addEventListener("click",()=>$("#installDialog").close());
+if(window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true)installButton.hidden=true;
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
+}
 
 render();
 })();

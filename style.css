@@ -42,3 +42,32 @@ button,input,select{font:inherit}button{cursor:pointer}.app-shell{width:min(1440
 .gcash-content .dialog-actions{width:100%;justify-content:space-between}
 .gcash-content .dialog-actions>*{flex:1;text-align:center}
 .download-qr{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:10px 13px;font-size:.76rem;font-weight:850;background:var(--lime);color:#1a2e05}
+
+/* Five additional light gradient themes */
+body[data-theme=lavender]{background:linear-gradient(135deg,#f5f3ff,#ddd6fe 50%,#c4b5fd);color:#1e1b4b}
+body[data-theme=mint]{background:linear-gradient(135deg,#ecfdf5,#a7f3d0 50%,#6ee7b7);color:#064e3b}
+body[data-theme=peach]{background:linear-gradient(135deg,#fff7ed,#fed7aa 50%,#fdba74);color:#7c2d12}
+body[data-theme=sky]{background:linear-gradient(135deg,#f0f9ff,#bae6fd 50%,#7dd3fc);color:#0c4a6e}
+body[data-theme=cream]{background:linear-gradient(135deg,#fffbeb,#fef3c7 50%,#fde68a);color:#713f12}
+body[data-theme=lavender] .panel,body[data-theme=mint] .panel,body[data-theme=peach] .panel,body[data-theme=sky] .panel,body[data-theme=cream] .panel{background:rgba(255,255,255,.78);border-color:rgba(15,23,42,.13);box-shadow:0 12px 35px #1e293b14;backdrop-filter:blur(12px)}
+body[data-theme=lavender] .helper,body[data-theme=mint] .helper,body[data-theme=peach] .helper,body[data-theme=sky] .helper,body[data-theme=cream] .helper,
+body[data-theme=lavender] .subtitle,body[data-theme=mint] .subtitle,body[data-theme=peach] .subtitle,body[data-theme=sky] .subtitle,body[data-theme=cream] .subtitle{color:#475569}
+body[data-theme=lavender] .team-box,body[data-theme=mint] .team-box,body[data-theme=peach] .team-box,body[data-theme=sky] .team-box,body[data-theme=cream] .team-box{background:#ffffffa8;border-color:#64748b30}
+body[data-theme=lavender] .player-chip,body[data-theme=mint] .player-chip,body[data-theme=peach] .player-chip,body[data-theme=sky] .player-chip,body[data-theme=cream] .player-chip{background:#ffffffc9;border-color:#64748b30;color:#0f172a}
+body[data-theme=lavender] .player-name,body[data-theme=mint] .player-name,body[data-theme=peach] .player-name,body[data-theme=sky] .player-name,body[data-theme=cream] .player-name,
+body[data-theme=lavender] .team-identity strong,body[data-theme=mint] .team-identity strong,body[data-theme=peach] .team-identity strong,body[data-theme=sky] .team-identity strong,body[data-theme=cream] .team-identity strong{color:#0f172a}
+body[data-theme=lavender] .icon-button,body[data-theme=mint] .icon-button,body[data-theme=peach] .icon-button,body[data-theme=sky] .icon-button,body[data-theme=cream] .icon-button{background:#e2e8f0;color:#0f172a}
+body[data-theme=lavender] th,body[data-theme=mint] th,body[data-theme=peach] th,body[data-theme=sky] th,body[data-theme=cream] th{color:#475569}
+body[data-theme=lavender] td,body[data-theme=mint] td,body[data-theme=peach] td,body[data-theme=sky] td,body[data-theme=cream] td{border-color:#64748b30}
+body[data-theme=lavender] .page-footer,body[data-theme=mint] .page-footer,body[data-theme=peach] .page-footer,body[data-theme=sky] .page-footer,body[data-theme=cream] .page-footer{color:#475569}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+.contact-panel{margin-top:16px;padding:17px 19px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.contact-panel>div{display:grid;gap:4px}.contact-panel strong{font-size:.95rem}.contact-link{text-decoration:none;white-space:nowrap}
+.share-dialog{width:min(440px,calc(100% - 28px))}
+.share-content{display:grid;gap:12px}
+.share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.share-grid a,.share-grid button{display:flex;align-items:center;justify-content:center;min-height:42px;padding:10px;border-radius:9px;background:#ffffff12;border:1px solid #ffffff24;color:inherit;text-decoration:none;font-size:.78rem;font-weight:800}
+.share-grid a:hover,.share-grid button:hover{background:#bef26425}
+body[data-theme=lavender] .share-grid a,body[data-theme=mint] .share-grid a,body[data-theme=peach] .share-grid a,body[data-theme=sky] .share-grid a,body[data-theme=cream] .share-grid a{background:#f1f5f9;color:#0f172a;border-color:#cbd5e1}
+@media(max-width:760px){.toolbar-actions{width:100%}.toolbar-actions button{flex:1}.contact-panel{align-items:flex-start;flex-direction:column}.contact-link{width:100%;text-align:center}}
+@media(max-width:560px){.courts-grid{grid-template-columns:minmax(0,1fr)}.courts-heading{align-items:flex-start;flex-direction:column}.court-title{align-items:flex-start;flex-direction:column}.court-head-actions{width:100%}.share-grid{grid-template-columns:1fr 1fr}}

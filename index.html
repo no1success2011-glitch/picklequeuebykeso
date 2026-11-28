@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172554">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Court Control">
+  <meta name="description" content="Pickleball court scoreboard, player rotation and per-court stats.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <title>Pickleball Court Control</title>
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
@@ -22,6 +29,11 @@
         <option value="court">Court Green</option><option value="sunset">Sunset</option>
         <option value="ocean">Ocean Blue</option><option value="berry">Berry Pop</option>
         <option value="neon">Neon Night</option>
+        <option value="lavender">Light Lavender</option>
+        <option value="mint">Fresh Mint</option>
+        <option value="peach">Soft Peach</option>
+        <option value="sky">Sky Blue</option>
+        <option value="cream">Warm Cream</option>
       </select>
     </div>
   </header>
@@ -32,7 +44,11 @@
       <input id="maxWins" type="number" min="1" max="99" value="11">
     </div>
     <div class="toolbar-note"><strong>Auto Queue</strong><span>Waiting players fill open team spots, two players per team.</span></div>
-    <button class="primary-button" id="addCourt">＋ Add court</button>
+    <div class="toolbar-actions">
+      <button class="secondary-button" id="shareApp">↗ Share app</button>
+      <button class="secondary-button" id="installApp">＋ Install app</button>
+      <button class="primary-button" id="addCourt">＋ Add court</button>
+    </div>
   </section>
 
   <section class="courts-heading"><div><p class="eyebrow">LIVE MATCHES</p><h2>Your courts</h2></div><span class="helper">Add courts as needed · each court is independent</span></section>
@@ -53,7 +69,11 @@
       </div>
     </div>
   </dialog>
-  <footer class="page-footer">Pickleball Court Control <span>•</span> Data is saved on this device</footer>
+  <section class="contact-panel panel">
+    <div><p class="eyebrow">FEEDBACK & SUPPORT</p><strong>Have an update or inquiry?</strong><p class="helper">Send your suggestions, feature requests, or questions directly by email.</p></div>
+    <a class="primary-button contact-link" href="mailto:no1success2011@gmail.com?subject=Pickleball%20Court%20Control%20-%20Feedback%20or%20Inquiry">Email the developer</a>
+  </section>
+  <footer class="page-footer">Pickleball Court Control <span>•</span> Data is saved on this device <span>•</span> Installable on Android & iOS</footer>
 </main>
 <dialog id="playerDialog">
   <form method="dialog" id="playerForm">
@@ -71,6 +91,30 @@
     <select id="swapTarget" required></select>
     <div class="dialog-actions"><span></span><button class="secondary-button" value="cancel">Cancel</button><button class="primary-button" id="confirmSwap" value="save">Switch players</button></div>
   </form>
+</dialog>
+<dialog id="shareDialog" class="share-dialog">
+  <div class="share-content">
+    <p class="eyebrow">SPREAD THE WORD</p><h2>Share Court Control</h2>
+    <p class="helper">Choose a platform or copy the app link.</p>
+    <div class="share-grid">
+      <a id="shareFacebook" target="_blank" rel="noopener">Facebook</a>
+      <a id="shareX" target="_blank" rel="noopener">X</a>
+      <a id="shareWhatsApp" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="shareTelegram" target="_blank" rel="noopener">Telegram</a>
+      <a id="shareEmail" target="_blank">Email</a>
+      <button id="copyAppLink" class="secondary-button">Copy link</button>
+    </div>
+    <div class="dialog-actions"><span></span><button class="secondary-button" id="closeShare">Close</button></div>
+  </div>
+</dialog>
+<dialog id="installDialog" class="share-dialog">
+  <div class="share-content">
+    <p class="eyebrow">INSTALL COURT CONTROL</p><h2>Add to your home screen</h2>
+    <p class="helper"><strong>Android:</strong> Open this app in Chrome, tap Install app (or the browser menu → Install app / Add to Home screen).</p>
+    <p class="helper"><strong>iPhone/iPad:</strong> Open this app in Safari, tap Share, then choose Add to Home Screen.</p>
+    <p class="helper">For installation, the app must be hosted over HTTPS. Once installed and cached, the app shell can open offline; shared data remains on each device.</p>
+    <div class="dialog-actions"><span></span><button class="secondary-button" id="closeInstall">Close</button></div>
+  </div>
 </dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body></html>
