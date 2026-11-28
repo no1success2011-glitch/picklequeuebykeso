@@ -114,3 +114,11 @@ dialog.gcash-dialog[open]{display:block}
 .team-name-edit:hover{text-decoration:underline}
 .team-identity,.team-identity>div{min-width:0}.team-label{white-space:normal}
 @media(max-width:560px){.player-chip{grid-template-columns:26px minmax(0,1fr) auto;gap:5px;padding:6px}.player-name{font-size:.72rem}.player-actions .icon-button{font-size:.58rem;padding:4px 5px}.team-name-edit{font-size:.62rem;letter-spacing:.04em}}
+
+
+/* Updated pickleball chrome emblem branding */
+.brand-heading{display:flex;align-items:center;gap:14px;min-width:0}
+.app-brand-logo{display:block;width:76px;height:76px;object-fit:contain;flex:0 0 auto;border-radius:17px;filter:drop-shadow(0 5px 12px rgba(0,0,0,.28))}
+.brand-copy{min-width:0}
+@media(max-width:640px){.brand-heading{gap:10px}.app-brand-logo{width:58px;height:58px;border-radius:13px}}
+@media(max-width:380px){.app-brand-logo{width:48px;height:48px}.brand-heading{gap:8px}}
